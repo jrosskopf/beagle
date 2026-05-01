@@ -1,0 +1,27 @@
+name: drive_beagle
+description: drive-beagle — a Flutter desktop sync utility for Google-Drive-backed folders, powered by rclone.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  beagle_core:
+    path: packages/beagle_core
+  flutter_riverpod: ^2.5.1
+  file_picker: ^8.0.0
+  path_provider: ^2.1.3
+  url_launcher: ^6.3.0
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

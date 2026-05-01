@@ -1,0 +1,28 @@
+# systemd --user service for drive-beagle (Linux desktop autostart).
+#
+# Install:
+#   mkdir -p ~/.config/systemd/user
+#   cp examples/drive-beagle.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now drive-beagle.service
+#
+# The unit launches the Flutter app in headless / hidden mode. On Wayland the
+# window will appear; we don't attempt to hide it, since GTK tray support is
+# limited. Users who want a strict background mode should switch to the macOS
+# build, which runs as a menu-bar agent.
+
+[Unit]
+Description=drive-beagle sync utility
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/drive-beagle-app
+Restart=on-failure
+RestartSec=5s
+# Pass through display so the Flutter window can render.
+Environment=XDG_RUNTIME_DIR=/run/user/%U
+
+[Install]
+WantedBy=default.target

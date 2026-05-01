@@ -1,0 +1,18 @@
+name: beagle_cli
+description: drive-beagle command-line interface.
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  beagle_core:
+    path: ../beagle_core
+  args: ^2.5.0
+  path: ^1.9.0
+  uuid: ^4.4.0
+
+dev_dependencies:
+  test: ^1.25.0
+  lints: ^4.0.0

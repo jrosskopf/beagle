@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd LaunchAgent for drive-beagle (macOS).
+
+  Install:
+    cp examples/com.drivebeagle.agent.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$UID ~/Library/LaunchAgents/com.drivebeagle.agent.plist
+    launchctl kickstart -k gui/$UID/com.drivebeagle.agent
+
+  The .app bundle is expected to live under /Applications/drive-beagle.app.
+  Adjust the ProgramArguments path if you install elsewhere.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.drivebeagle.agent</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Applications/drive-beagle.app/Contents/MacOS/drive-beagle</string>
+  </array>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+
+  <key>ProcessType</key>
+  <string>Interactive</string>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/drive-beagle.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/tmp/drive-beagle.err.log</string>
+</dict>
+</plist>

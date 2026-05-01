@@ -1,0 +1,35 @@
+# drive-beagle configuration example.
+#
+# Copy to ~/.config/drive-beagle/config.yaml (Linux) or
+# ~/Library/Application Support/drive-beagle/config.yaml (macOS).
+config_version: 1
+global_concurrency: 1
+log_level: info
+
+# Optional explicit IPC socket path. If omitted, drive-beagle uses
+# $XDG_RUNTIME_DIR/drive-beagle.sock on Linux and
+# ~/Library/Application Support/drive-beagle/control.sock on macOS.
+# ipc_socket_path: /run/user/1000/drive-beagle.sock
+
+pairs:
+  - id: 4f3c4f8d-aaaa-bbbb-cccc-1234567890ab
+    name: memory
+    local_path: /home/you/memory
+    remote_name: gdrive
+    remote_path: memory
+    mode: bidirectional
+    conflict_policy: keep_both_suffix
+    debounce_ms: 4000
+    reconcile_every_seconds: 600
+    enabled: true
+    bootstrapped: false
+    filters:
+      include_extensions: [md, txt, json, yaml, yml]
+      exclude_globs: []
+      ignore_hidden: true
+      ignore_vcs: true
+      ignore_node_modules: true
+      ignore_common_build_dirs: true
+      custom_rules: []
+    size_policy:
+      max_bytes: null
