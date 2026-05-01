@@ -33,6 +33,7 @@ class ControlClient {
       );
     }
     final lines = socket
+        .cast<List<int>>()
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .asBroadcastStream();

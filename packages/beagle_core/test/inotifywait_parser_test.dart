@@ -21,11 +21,13 @@ void main() {
       expect(ev.backend, 'inotifywait');
     });
 
-    test('multi-event list', () {
+    test('multi-event list (CSV-quoted by inotifywait)', () {
+      // inotifywait --csv quotes the events field when it contains a comma.
       final ev =
-          InotifywaitBackend.parseLine('/tmp/p1/,CREATE,ISDIR,sub', _pair);
+          InotifywaitBackend.parseLine('/tmp/p1/,"CREATE,ISDIR",sub', _pair);
       expect(ev, isNotNull);
       expect(ev!.kind, WatcherKind.created);
+      expect(ev.path, '/tmp/p1/sub');
     });
 
     test('quoted filename with comma', () {

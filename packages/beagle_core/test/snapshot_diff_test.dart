@@ -8,13 +8,23 @@ void main() {
         SnapshotEntry(path: path, size: size, modtime: modtime ?? t, hash: hash);
 
     test('classifies created/modified/deleted', () {
+      // Use distinct sizes so the move heuristic does not pair gone.md with
+      // new.md.
       final before = Snapshot(
         pairId: 'p1', takenAt: t, side: ChangeSide.local,
-        entries: [e('keep.md'), e('mod.md', size: 100), e('gone.md')],
+        entries: [
+          e('keep.md', size: 10),
+          e('mod.md', size: 100),
+          e('gone.md', size: 50),
+        ],
       );
       final after = Snapshot(
         pairId: 'p1', takenAt: t, side: ChangeSide.local,
-        entries: [e('keep.md'), e('mod.md', size: 200), e('new.md')],
+        entries: [
+          e('keep.md', size: 10),
+          e('mod.md', size: 200),
+          e('new.md', size: 999),
+        ],
       );
       final d = SnapshotDiffer().diff(before, after);
       expect(d.created.map((e) => e.path).toList(), ['new.md']);

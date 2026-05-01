@@ -61,6 +61,7 @@ class ControlServer {
 class ControlConnection {
   ControlConnection._(this._socket, this._dispatcher) {
     _socket
+        .cast<List<int>>()
         .transform(utf8.decoder)
         .transform(const LineSplitter())
         .listen(_handleLine, onDone: _handleClose, onError: (Object _) => _handleClose());

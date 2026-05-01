@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:beagle_core/beagle_core.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:test/test.dart';
@@ -28,17 +30,21 @@ void main() {
       );
       var fires = 0;
       // Tap every 50ms forever — without maxWait this would never fire.
+      // Use Timer (which fakeAsync controls) rather than Future.delayed
+      // (which it does too via runZonedGuarded but is less direct here).
       var ticks = 0;
       void schedule() {
         d.tap(() => fires++);
         ticks++;
         if (ticks < 20) {
-          Future.delayed(const Duration(milliseconds: 50), schedule);
+          Timer(const Duration(milliseconds: 50), schedule);
         }
       }
 
       schedule();
       async.elapse(const Duration(milliseconds: 300));
+      // First tap at t=0, max-wait of 250ms means the action must fire at
+      // t≤250ms even though taps keep arriving every 50ms.
       expect(fires, greaterThan(0));
     });
   });

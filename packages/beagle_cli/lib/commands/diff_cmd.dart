@@ -37,7 +37,7 @@ class DiffCmd extends Command<int> {
       throw BeagleError(
         BeagleErrorCode.invalidConfig,
         'No baseline snapshot found at ${ctx.dir.snapshotPath(pair.id, side, fromTag)}',
-        remedy: 'Run `drive-beagle snapshot --pair $${pair.id} --fresh` first.',
+        remedy: 'Run `drive-beagle snapshot --pair ${pair.id} --fresh` first.',
       );
     }
     final Snapshot toSnap;

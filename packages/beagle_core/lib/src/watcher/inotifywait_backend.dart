@@ -38,13 +38,14 @@ class InotifywaitBackend implements WatcherBackend {
   @override
   Stream<WatcherEvent> start(SyncPair pair) async* {
     final exclude = _excludeRegex(pair);
+    // NOTE: inotifywait 3.22+ rejects `--format` together with `--csv`; the
+    // CSV output already uses the fixed format `<watched_path>,<events>,<file>`,
+    // which is what `parseLine` expects.
     final args = <String>[
       '-m',
       '-r',
       '-q',
       '--csv',
-      '--format',
-      '%w,%e,%f',
       '-e',
       'modify,create,delete,move,attrib,move_self,delete_self',
       if (exclude != null) ...['--exclude', exclude],
